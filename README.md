@@ -14,15 +14,15 @@ If it isn't, it sets this field to true.
 Then, it generates a certificate and add `arianeeCertificatePassphrase` and `arianeeCertificateId` to the custom fields
 of the THNG.
 
-Once it is done, it generates a `_NFTGenerated` action with the certificate information as custom fields.
+Once it is done, it generates a `_NFTGenerated` action with the certificate information inside.
 
 ## Reactor script configuration
 
 To make the script working, you need to add a few fields to your application custom fields:
 
-- `walletKey`: The key of your wallet. (e.g '0x00000...')
+- `walletKey`: The key of your wallet (e.g '0x00000...').
 - `arianeeEnvironment`: The Arianee environment (`test` or `production`)
-- `certificateURL`: The URL of a hosted JSON that correspond to the certificate you want to deliver. See JSON
+- `certificateURL`: The URL of a hosted JSON that correspond to the certificate you want to deliver. See the JSON
 certificate section to have an example.
 
 ## Deploy the reactor script
@@ -53,7 +53,7 @@ You can use it to have an end to end solution for the Arianee integration.
 
 ## JSON certificate
 
-Here is an example of certificate you can use:
+Here is an example of a certificate you can use:
 
 ```json
 {
