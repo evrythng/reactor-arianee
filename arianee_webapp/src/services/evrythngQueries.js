@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 
+const arianeeEnumUrl = {test:'test.arian.ee', production:'arian.ee'};
 let operator = null;
 let application = null;
+
 // This key isn't private
 const APPLICATION_API_KEY = 'nxBSTkcfCaEqMe1vfl9XaofzX8jb3lGIltxE1whgwv5n6uJFluiAa4bHPvdBNPteFG0GBxkdMAyFsYDp';
-const arianeeEnumUrl = {test:'test.arian.ee', production:'arian.ee'};
-const arianeeUrl = arianeeEnumUrl.test;
+
+const arianeeUrl = arianeeEnumUrl.test; // change to arianeeEnumUrl.production if you want to work in production
 
 /**
  * Load asynchronously the script passed in parameter
@@ -34,7 +36,6 @@ export const getOperator = async () => {
   if (!operator){
     application = new evrythng.Application(APPLICATION_API_KEY);
     operator = await application.appUser().create({anonymous:true});
-    console.log(operator);
     return operator;
   }
   return operator;
