@@ -1,6 +1,11 @@
 const {Arianee} = require('@arianee/arianeejs');
 const fetch = require("node-fetch");
 
+const arianeeEnvironments = {
+  test: 'testnet',
+  production: 'mainnet',
+}
+
 /**********************************       ARIANEE FUNCTIONS     ************************************/
 
 /******      CERTIFICATES    ******/
@@ -57,7 +62,7 @@ const checkIfTheCertificateHasAlreadyBeenCreated = async (thngId) => {
 
 // @filter(onActionCreated) action.customFields.generateArianeeCertificate=true
 const onActionCreated = ({action}) => runAsync(async () => {
-  const {walletKey, certificateURL} = await getCustomFieldsOfTheApp(app.apiKey);
+  const {walletKey, certificateURL, arianeeEnvironment} = await getCustomFieldsOfTheApp(app.apiKey);
   const {thng, product} = action;
 
   // If the certificate was already created (or is being created), I don't create it
@@ -69,9 +74,11 @@ const onActionCreated = ({action}) => runAsync(async () => {
   app.thng(thng).update({customFields: {'arianeeCertificateHasBeenGenerated':true}});
 
   // By default Arianee will be initialized on testnet network
-  const arianee = await new Arianee().init();
+  let environment = arianeeEnvironments.test;
+  if (arianeeEnvironment === 'production')
+    environment = arianeeEnvironments.production;
 
-  // Retrieve the wallet
+  let arianee = await new Arianee().init(environment);
   const wallet = arianee.fromPrivateKey(walletKey);
 
   try {
