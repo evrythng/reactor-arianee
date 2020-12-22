@@ -3,13 +3,27 @@
 ## requirements
 
 Node version: `v10.23.0`
+You need to create `_NFTGenerated` and `_GenerateNFT` action types.
+
+## How it works
+
+When the onActionCreated is triggered, the script checks if a certificate has already been generated for the thng (
+by checking the `arianeeCertificateHasBeenGenerated` custom field). 
+If it isn't, it sets this field to true.
+
+Then, it generates a certificate and add `arianeeCertificatePassphrase` and `arianeeCertificateId` to the custom fields
+of the THNG.
+
+Once it is done, it generates a `_NFTGenerated` action with the certificate information as custom fields.
 
 ## Reactor script configuration
 
 To make the script working, you need to add a few fields to your application custom fields:
 
 - `walletKey`: The key of your wallet. (e.g '0x00000...')
-- `certificateURL`: The URL of a hosted JSON that correspond to the certificate you want to deliver 
+- `arianeeEnvironment`: The Arianee environment (`test` or `production`)
+- `certificateURL`: The URL of a hosted JSON that correspond to the certificate you want to deliver. See JSON
+certificate section to have an example.
 
 ## Deploy the reactor script
 
@@ -30,4 +44,104 @@ You also need to update `access_key.secret` with your OPERATOR_API_KEY. To get i
 Finally, you run this command to deploy the script: 
 ```
 npm run deploy_reactor
+```
+
+## Using it with the arianee_webapp
+
+In the folder `arianee_webapp`, there is a react application.
+You can use it to have an end to end solution for the Arianee integration.
+
+## JSON certificate
+
+Here is an example of certificate you can use:
+
+```json
+{
+  "$schema": "https://cert.arianee.org/version1/ArianeeProductCertificate-i18n.json",
+  "name": "Luxiva",
+  "sku": "YOUR_SKU",
+  "gtin": "YOUR_GTIN",
+  "brandInternalId": "NYC12345",
+  "category": "accessory",
+  "intended": "womens",
+  "serialnumber": [
+    {
+      "type": "serialnumber",
+      "value": "SERIAL_NUMBER"
+    },
+    {
+      "type": "casenumber",
+      "value": "CASE_NUMBER"
+    }
+  ],
+  "subBrand": "Luxiva Cosmetics",
+  "model": "PureDerm Cream Soap Original 100g",
+  "language": "en-US",
+  "description": "<b>Description</b>\nPremium soap bar",
+  "subDescription": [],
+  "externalContents": [
+    {
+      "type": "website",
+      "title": "EVRYTHNG Website",
+      "url": "https://www.evrythng.com/",
+      "order": 1
+    }
+  ],
+  "msrp": [
+    {
+      "msrp": "35000",
+      "currency": "EUR",
+      "msrpCountry": "Europe"
+    },
+    {
+      "msrp": "32000",
+      "currency": "GBP",
+      "msrpCountry": "United Kingdom"
+    },
+    {
+      "msrp": "40000",
+      "currency": "USD",
+      "msrpCountry": "USA"
+    }
+  ],
+  "medias": [
+    {
+      "mediaType": "picture",
+      "type": "product",
+      "url": "https://s3.amazonaws.com/evtcdn_02/2/uf/UMyr7GYFSn2HrEwRwmhm8Cdk/Pure%20derm%20cream%20soap.jpg",
+      "order": 1
+    }
+  ],
+  "attributes": [
+    {
+      "type": "color",
+      "value": "Gold"
+    }
+  ],
+  "materials": [
+    {
+      "material": "gold",
+      "pourcentage": "50%"
+    }
+  ],
+  "size": [
+    {
+      "type": "depth",
+      "value": "6",
+      "unit": "in"
+    },
+    {
+      "type": "depth",
+      "value": "3,6",
+      "unit": "cm"
+    }
+  ],
+  "manufacturingCountry": "Switzerland",
+  "facilityId": "12345",
+  "productCertification": [
+    {
+      "name": "fairtrade"
+    }
+  ]
+}
 ```
