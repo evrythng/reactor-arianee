@@ -15,10 +15,11 @@ const App = () => {
 
   useEffect(() => {
     const thngId = getQueryParam('thng');
-    if (thngId) {
-      onApplicationLoad(thngId);
+    const code = getQueryParam('code');
+    if (thngId && code) {
+      onApplicationLoad(thngId, code);
     } else {
-      console.error('You need to provide a THNG');
+      console.error('You need to provide a THNG and a code');
     }
   }, []);
 

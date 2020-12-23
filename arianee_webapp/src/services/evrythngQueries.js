@@ -3,9 +3,7 @@
 const arianeeEnumUrl = {test:'test.arian.ee', production:'arian.ee'};
 let operator = null;
 let application = null;
-
-// This key isn't private
-const APPLICATION_API_KEY = 'nxBSTkcfCaEqMe1vfl9XaofzX8jb3lGIltxE1whgwv5n6uJFluiAa4bHPvdBNPteFG0GBxkdMAyFsYDp';
+let APPLICATION_API_KEY = '';
 
 const arianeeUrl = arianeeEnumUrl.test; // change to arianeeEnumUrl.production if you want to work in production
 
@@ -113,8 +111,11 @@ export const triggerReactorScript = async (thngId) => {
  * Setup the EVRYTHNG sdk
  * Setup the websocket
  * Create a _GenerateNFT action
+ * @param {string} thngId
+ * @param {string} code - The application API Key
  */
-export const onApplicationLoad = async (thngId) => {
+export const onApplicationLoad = async (thngId, code) => {
+  APPLICATION_API_KEY = code;
   await loadScript('https://d10ka0m22z5ju5.cloudfront.net/js/evrythng/5.9.3/evrythng-5.9.3.js');
   await setupEvrythngSdk();
   await getOperator();

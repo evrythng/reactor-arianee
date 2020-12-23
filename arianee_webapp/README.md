@@ -2,7 +2,7 @@
 
 ## How it works
 
-When the application is loaded, it reads the `THNG` passed in the url.
+When the application is loaded, it reads the `THNG` and `code` passed in the url.
 Then, it creates an anonymous user and listen to the new actions that are created on the THNG.
 Then, if a certificate was already created for this THNG, it redirects the user to the Arianee app.
 Otherwise, it creates a `_GenerateNFT` action which triggers the reactor to generate the certificate.
@@ -25,11 +25,7 @@ In order to use the app, you need to create `_NFTGenerated` and `_GenerateNFT` a
     ```
     const arianeeUrl = arianeeEnumUrl.production;
     ```
-
-- Application API Key
-
-    In `services/evrythngQueries.js`, set the variable `APPLICATION_API_KEY` to your application API Key
-
+  
 ## Testing locally
 
 To run the app locally, you can do:
