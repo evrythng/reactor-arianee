@@ -29,3 +29,11 @@ In order to use the app, you need to create `_NFTGenerated` and `_GenerateNFT` a
 - Application API Key
 
     In `services/evrythngQueries.js`, set the variable `APPLICATION_API_KEY` to your application API Key
+
+## Testing locally
+
+To run the app locally, start by cloning the app:
+
+1. `$ git clone https://github.com/evrythng/reactor-arianee.git && cd reactor-arianee/arianee_webapp`
+2. `$ npm install`
+3. `$ npm start`
