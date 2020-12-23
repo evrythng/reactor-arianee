@@ -3,6 +3,7 @@
 ## requirements
 
 Node version: `v10.23.0`
+
 You need to create `_NFTGenerated` and `_GenerateNFT` action types.
 
 ## How it works
