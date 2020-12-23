@@ -23,7 +23,7 @@ To make the script working, you need to add a few fields to your application cus
 
 - `walletKey`: The key of your wallet (e.g '0x00000...').
 - `arianeeEnvironment`: The Arianee environment (`test` or `production`)
-- `certificateURL`: The URL of a hosted JSON that correspond to the certificate you want to deliver. See the JSON
+- `certificateURL`: The URL of a hosted JSON that corresponds to the certificate you want to deliver. See the JSON
 certificate section to have an example.
 
 ## Deploy the reactor script
