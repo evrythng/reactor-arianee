@@ -3,14 +3,14 @@
 ## How it works
 
 When the application is loaded, it reads the `THNG` and `code` passed in the url.
-Then, it creates an anonymous user and listen to the new actions that are created on the THNG.
+Then, it creates an anonymous user and listen to the new Actions that are created on the THNG.
 Then, if a certificate was already created for this THNG, it redirects the user to the Arianee app.
 Otherwise, it creates a `_GenerateNFT` action which triggers the reactor to generate the certificate.
 Once the certificate is generated, it redirects the user to the Arianee app.
 
 ## EVRYTHNG configuration
 
-In order to use the app, you need to create `_NFTGenerated` and `_GenerateNFT` action types.
+In order to use the app, you need to create `_NFTGenerated` and `_GenerateNFT` Action types.
 
 ## App configuration
 

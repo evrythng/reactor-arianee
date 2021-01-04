@@ -4,22 +4,22 @@
 
 Node version: `v10.23.0`
 
-You need to create `_NFTGenerated` and `_GenerateNFT` action types.
+You need to create `_NFTGenerated` and `_GenerateNFT` Action types.
 
 ## How it works
 
-When the onActionCreated is triggered, the script checks if a certificate has already been generated for the thng (
-by checking the `arianeeCertificateHasBeenGenerated` custom field). 
+When the onActionCreated is triggered, the script checks if a certificate has already been generated for the THNG (
+by checking the `arianeeCertificateHasBeenGenerated` customField). 
 If it isn't, it sets this field to true.
 
-Then, it generates a certificate and add `arianeeCertificatePassphrase` and `arianeeCertificateId` to the custom fields
+Then, it generates a certificate and add `arianeeCertificatePassphrase` and `arianeeCertificateId` to the customFields
 of the THNG.
 
-Once it is done, it generates a `_NFTGenerated` action with the certificate information inside.
+Once it is done, it generates a `_NFTGenerated` Action with the certificate information inside.
 
 ## Reactor script configuration
 
-To make the script working, you need to add a few fields to your application custom fields:
+To make the script working, you need to add a few fields to your Application customFields:
 
 - `walletKey`: The key of your wallet (e.g '0x00000...').
 - `arianeeEnvironment`: The Arianee environment (`test` or `production`)
@@ -28,9 +28,8 @@ certificate section to have an example.
 
 ## Deploy the reactor script
 
-First, you need to start by cloning this project.
-
-Then, you need to configure a few variables as it is explained in the previous section.
+Start by cloning this project.
+Then, you'll need to configure a few variables as explained in the previous section.
 
 Once you have configured the reactor script, you have to deploy it to your application. To deploy it, you can do it 
 manually or use the EVRYTHNG API. I suggest you to use the deploy_reactor command that is defined in the `package.json`. 
@@ -39,17 +38,17 @@ You just need to modify this part of the command with your PROJECT_ID and APPLIC
 PUT 'https://api.evrythng.com/projects/PROJECT_ID/applications/APPLICATION_ID/reactor/script'
 ```
 
-You also need to update `access_key.secret` with your OPERATOR_API_KEY. To get it, you have to click on your account 
-(top right corner of the EVRYTHNG dashboard) and go to `Account settings`.
+You also need to update `access_key.secret` with your OPERATOR_API_KEY. To get it, go to your account 
+(top right corner of the EVRYTHNG dashboard) and select `Account settings`.
 
-Finally, you run this command to deploy the script: 
+Finally, run this command to deploy the script: 
 ```
 npm run deploy_reactor
 ```
 
 ## Using it with the arianee_webapp
 
-In the folder `arianee_webapp`, there is a react application.
+In the folder `arianee_webapp`, there is a React application.
 You can use it to have an end to end solution for the Arianee integration.
 
 ## JSON certificate
