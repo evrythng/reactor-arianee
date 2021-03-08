@@ -1,0 +1,18 @@
+{
+  "name": "reactor-arianee",
+  "version": "1.0.0",
+  "description": "Packaged Reactor script to integrate with Arianee.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy_reactor": "rm bundle.zip; zip bundle.zip main.js package.json; curl -i -H \"Content-Type: multipart/form-data\" -H \"Authorization: `cat access_key.secret | head -n1`\"  -X PUT 'https://api.evrythng.com/projects/U9N5FqWAxnEyQRc7mRHNydXm/applications/U9NKFrrnRgkYEAfWpHc8ErUe/reactor/script' -F file=@./bundle.zip"
+  },
+  "keywords": [],
+  "author": "EVRYTHNG",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@arianee/arianeejs": "^1.42.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {}
+}
