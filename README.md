@@ -28,6 +28,9 @@ certificate section to have an example.
 
 ## Deploy the reactor script
 
+For now, the node version of the reactor isn't compatible with the Arianee sdk. Therefore, we can't deploy this script 
+to the reactor.
+
 Start by cloning this project.
 Then, you'll need to configure a few variables as explained in the previous section.
 
