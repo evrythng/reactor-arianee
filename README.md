@@ -53,7 +53,7 @@ You can use it to build an end to end solution to test the Arianee integration.
 
 ## Arianee JSON certificate
 
-Here is an example of an Ariannee JSON certificate:
+Here is an example of an Arianee JSON certificate:
 
 ```json
 {
