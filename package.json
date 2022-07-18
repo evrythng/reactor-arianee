@@ -10,8 +10,11 @@
   "keywords": [],
   "author": "EVRYTHNG",
   "license": "Apache-2.0",
+  "type": "module",
   "dependencies": {
-    "@arianee/arianeejs": "^1.42.0",
+    "@arianee/arianeejs": "^1.97.0",
+    "dotenv": "^16.0.1",
+    "evrythng": "^6.0.5",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {}

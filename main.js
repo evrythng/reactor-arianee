@@ -1,3 +1,8 @@
+'use strict';
+
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+
 const {Arianee} = require('@arianee/arianeejs');
 const fetch = require("node-fetch");
 
@@ -37,19 +42,6 @@ const createCertificate = async (wallet, certificateURL) => {
 const runAsync = f => f().catch(e => logger.error(e.message || e.errors[0])).then(done);
 
 /**
- * Returns the custom fields of the corresponding app
- * @param {string} apiKey - The trusted api key of the app
- * @returns {Promise<Map>} - A map containing the custom fields of the app.
- */
-const getCustomFieldsOfTheApp = async (apiKey) => {
-  const c = await EVT.api({
-    url: '/applications/me',
-    authorization: apiKey
-  });
-  return c.customFields;
-}
-
-/**
  * Check if the certificate was already created (or is being created)
  * @param {string} thngId
  * @returns {Promise<boolean>}
@@ -60,51 +52,75 @@ const checkIfTheCertificateHasAlreadyBeenCreated = async (thngId) => {
   return !!(arianeeCertificateHasBeenGenerated);
 }
 
-// @filter(onActionCreated) action.customFields.generateArianeeCertificate=true
-const onActionCreated = ({action}) => runAsync(async () => {
-  const {walletKey, certificateURL, arianeeEnvironment} = await getCustomFieldsOfTheApp(app.apiKey);
+// @filter(onActionCreated) action.type=_FormSubmitted
+export const onActionCreated = ({action}) => runAsync(async () => {
+  console.log({action})
+  await app.init();
+
   const {thng, product} = action;
-
-  // If the certificate was already created (or is being created), I don't create it
-  const alreadyCreated = await checkIfTheCertificateHasAlreadyBeenCreated(thng);
-
-  if (alreadyCreated)
-    return;
-
-  app.thng(thng).update({customFields: {'arianeeCertificateHasBeenGenerated':true}});
-
-  // By default Arianee will be initialized on testnet network
-  let environment = arianeeEnvironments.test;
-  if (arianeeEnvironment === 'production')
-    environment = arianeeEnvironments.production;
-
-  let arianee = await new Arianee().init(environment);
-  const wallet = arianee.fromPrivateKey(walletKey);
+  console.log({thng, product});
 
   try {
+    const thngTags = (await app.thng(thng).read()).tags;
+    const thngCustomFields = (await app.thng(thng).read()).customFields;
+
+    if (!thngTags.includes('nftGenerationInProgress')) {
+      thngTags.push('nftGenerationInProgress');
+      const payload = {tags: thngTags};
+      await app.thng(thng).update(payload);
+    }
+
+    console.log({thngTags, thngCustomFields});
+    const {walletKey, certificateURL, arianeeEnvironment} = app.customFields;
+    console.log(app)
+    console.log({walletKey, certificateURL, arianeeEnvironment});
+
+    // If the certificate was already created (or is being created), I don't create it
+    const alreadyCreated = await checkIfTheCertificateHasAlreadyBeenCreated(thng);
+    if (alreadyCreated)
+      return;
+
+    app.thng(thng).update({customFields: {...thngCustomFields, 'arianeeCertificateHasBeenGenerated':true}});
+
+    // By default Arianee will be initialized on testnet network
+    let environment = arianeeEnvironments.test;
+    if (arianeeEnvironment === 'production')
+      environment = arianeeEnvironments.production;
+
+    let arianee = await new Arianee().init(environment);
+    const wallet = arianee.fromPrivateKey(walletKey);
+    console.log('wallet',wallet);
+
     // Create a certificate
     logger.info('Creating a certificate for ' + thng);
     const {certificateId, passphrase} = await createCertificate(wallet, certificateURL);
-    const customFieldsPayload = {'arianeeCertificatePassphrase':passphrase,'arianeeCertificateId':certificateId, 'arianeeCertificateHasBeenGenerated':true};
-
+    const customFieldsPayload = {...thngCustomFields, 'arianeeCertificatePassphrase':passphrase,'arianeeCertificateId':certificateId, 'arianeeCertificateHasBeenGenerated':true};
+    console.log({certificateId, passphrase});
     await app.thng(thng).update({customFields: customFieldsPayload});
 
     const actionType = '_NFTGenerated';
     const actionPayload = {
       type: actionType,
       product: product,
-      customFields: customFieldsPayload,
+      customFields: {'arianeeCertificatePassphrase':passphrase,'arianeeCertificateId':certificateId, 'arianeeCertificateHasBeenGenerated':true},
     };
 
     app.thng(thng).action(actionType).create(actionPayload);
+
+    if (!thngTags.includes('registered')) {
+      thngTags.push('registered');
+      var thngTagsFiltered = thngTags.filter(function(value, index, arr){ 
+          return value !== 'nftGenerationInProgress';
+      });
+      console.log(thngTagsFiltered)
+      const payload = {tags: thngTagsFiltered};
+      await app.thng(thng).update(payload);
+    }
 
   } catch (e) {
     logger.error(JSON.stringify(e));
   }
 
   done();
+  
 });
-
-module.exports = {
-  onActionCreated,
-}
