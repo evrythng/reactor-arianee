@@ -1,0 +1,26 @@
+{
+    "type": "_FormSubmitted",
+    "id": "VTqsPbAkWtSFhqbKn5gUmtVp",
+    "createdAt": 1657725240435,
+    "customFields": {
+        "Your email address": "Test"
+    },
+    "timestamp": 1657725240435,
+    "user": "VyKH7y2Q39DFCschrRQeNkKk",
+    "location": {
+        "latitude": 46.5147658,
+        "longitude": 6.6338298,
+        "position": {
+            "type": "Point",
+            "coordinates": [
+                6.6338298,
+                46.5147658
+            ]
+        }
+    },
+    "locationSource": "sensor",
+    "createdByProject": "U9tBhhMdNWgbs4ByrFNy9Adb",
+    "createdByApp": "VaaaWHK5xxETwNbSyw4bhHkd",
+    "thng": "Vyp4qbGxGtXFCPThraQdgMsn",
+    "product": "Vy4nPnrMcRdtdyR7ESNarcwb"
+}
