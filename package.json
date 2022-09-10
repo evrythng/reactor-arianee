@@ -11,7 +11,7 @@
   "author": "EVRYTHNG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@arianee/arianeejs": "^1.42.0",
+    "@arianee/arianeejs": "^1.61.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {}
